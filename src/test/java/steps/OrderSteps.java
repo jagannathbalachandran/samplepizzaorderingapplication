@@ -39,7 +39,7 @@ public class OrderSteps {
         String pizzaName = pizza + random.nextInt();
         List<Topping> toppings = asToppings(dataTable);
         sharedContext.setPizza(new Pizza(pizzaName , size , toppings));
-        orderPage.selectPizza(pizzaName , size);
+        orderPage.selectPizza(pizzaName, size);
         orderPage.addToppings(toppings);
     }
 
@@ -48,14 +48,31 @@ public class OrderSteps {
         orderPage.order();
     }
 
-    @Then("^the pizza should be shown in the list of orders$")
+    @When("^I order from the order listing page$")
+    public void I_order_from_the_order_listing_page() throws Throwable {
+        orderListingPage.viewDetails(sharedContext.getPizza());
+        orderPage.order();
+    }
+
+    @Then("^the order should be placed for the pizza$")
     public void the_size_pizza_should_be_shown_in_the_list_of_orders() throws Throwable {
         assertTrue("Order for " + sharedContext.getPizza() +" is not listed" , orderListingPage.isOrderPlacedFor(sharedContext.getPizza()));
+    }
+
+    @Then("^the order should not be placed for the pizza$")
+    public void the_size_pizza_should_not_be_shown_in_the_list_of_orders() throws Throwable {
+        assertTrue("Order for " + sharedContext.getPizza() +" is not listed" , !orderListingPage.isOrderPlacedFor(sharedContext.getPizza()));
     }
 
     private List<Topping> asToppings(DataTable dataTable) {
         List<Topping> toppings =  new ArrayList<Topping>();
         toppings = dataTable.asList(Topping.class);
         return toppings;
+    }
+
+    @When("^I navigate to order listing page$")
+    public void I_navigate_to_order_listing_page() throws Throwable {
+        // Express the Regexp above with the code you wish you had
+        homePage.navigateToOrderListingPage();
     }
 }
