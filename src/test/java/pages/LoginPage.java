@@ -27,10 +27,11 @@ public class LoginPage {
         webDriver.navigate().to(url);
     }
 
-    public void signInAs(String username, String password) {
+    public HomePage signInAs(String username, String password) {
         user_name_field.sendKeys(username);
         password_field.sendKeys(password);
         login.click();
+        return new HomePage(webDriver);
     }
 
 

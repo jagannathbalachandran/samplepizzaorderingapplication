@@ -7,10 +7,13 @@ import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
 import org.openqa.selenium.support.PageFactory;
+import util.PropertyReader;
 
 import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
+
+import static junit.framework.Assert.assertTrue;
 
 
 public class OrderListingPage {
@@ -22,11 +25,12 @@ public class OrderListingPage {
 
     private WebDriver webDriver;
 
-    @FindBy(linkText = "Order this pizza")
-    private WebElement order_pizza_link;
+    private PropertyReader reader;
 
     public OrderListingPage(WebDriver webDriver) {
         this.webDriver = webDriver;
+        reader = new PropertyReader();
+        assertTrue(webDriver.getCurrentUrl().equals(reader.readProperty("url") + "/pizzas"));
         PageFactory.initElements(webDriver, this);
     }
 
@@ -54,7 +58,7 @@ public class OrderListingPage {
         return new Pizza(pizzaName , size , new ArrayList<Topping>());
     }
 
-    public void viewDetails(Pizza pizza) {
+    public EditPizzaPage viewDetails(Pizza pizza) throws Exception {
         List<WebElement> rows = webDriver.findElement(By.cssSelector("body table")).findElements(By.tagName("tr"));
         for (Iterator<WebElement> iterator = rows.iterator(); iterator.hasNext(); ) {
             WebElement row = iterator.next();
@@ -64,7 +68,11 @@ public class OrderListingPage {
             String noOfToppings = columns.get(PIZZA_NO_OF_TOPPINGS_COLUMN_INDEX).getText();
             if(pizza.equals(currPizza) && Integer.valueOf(pizza.getNoOfToppings()).equals(Integer.valueOf(noOfToppings))) {
                 columns.get(PIZZA_SHOW_DETAILS_COLUMN_INDEX).click();
+                return new EditPizzaPage(webDriver);
             }
         }
+
+        throw new Exception("Not able to find the pizza " + pizza);
+
     }
 }

@@ -17,7 +17,6 @@ public class LoginSteps {
     public LoginSteps(SharedContext driver){
         webDriver = driver.getDriver();
         loginPage = new LoginPage(webDriver);
-        homePage = new HomePage(webDriver);
         reader = new PropertyReader();
     }
 
@@ -28,6 +27,6 @@ public class LoginSteps {
 
     @When("^I sign in$")
     public void the_user_signs_in() throws Throwable {
-        loginPage.signInAs( reader.readProperty("username"),  reader.readProperty("password"));
+        homePage = loginPage.signInAs( reader.readProperty("username"),  reader.readProperty("password"));
     }
 }

@@ -23,7 +23,7 @@ public class PropertyReader {
             properties.load(inputStream);
         } catch (IOException e) {
             e.printStackTrace();
-            System.exit(0);
+            System.exit(1);
         }
 
     }

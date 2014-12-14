@@ -5,6 +5,7 @@ import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
 import org.openqa.selenium.support.PageFactory;
 import util.PropertyReader;
+import static junit.framework.Assert.assertTrue;
 
 
 public class HomePage {
@@ -24,16 +25,19 @@ public class HomePage {
 
     public HomePage(WebDriver webDriver) {
         this.webDriver = webDriver;
-        PageFactory.initElements(webDriver , this);
         reader = new PropertyReader();
+        assertTrue(webDriver.getCurrentUrl().equals(reader.readProperty("url") + "/account"));
+        PageFactory.initElements(webDriver , this);
     }
 
-    public void navigateToOrderPage() {
+    public NewPizzaPage navigateToOrderPage() {
         order_pizza_link.click();
+        return new NewPizzaPage((webDriver));
     }
 
-    public void navigateToOrderListingPage() {
+    public OrderListingPage navigateToOrderListingPage() {
         webDriver.navigate().to(reader.readProperty("url") + "/account");
         list_of_orders_link.click();
+        return new OrderListingPage(webDriver);
     }
 }

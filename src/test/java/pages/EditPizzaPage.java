@@ -10,18 +10,12 @@ import java.util.Iterator;
 import java.util.List;
 
 
-public class OrderPage {
+public class EditPizzaPage {
 
     private WebDriver webDriver;
 
-    @FindBy(id = "pizza_name")
-    private WebElement pizza_name_field;
-
     @FindBy(id = "topping_name")
     private WebElement topping_name_field;
-
-    @FindBy(id = "pizza_size")
-    private WebElement pizza_size_field;
 
     @FindBy(id = "topping_double_order")
     private WebElement topping_double_order_field;
@@ -35,17 +29,11 @@ public class OrderPage {
     @FindBy(linkText = "Order this pizza")
     private WebElement order_pizza_link;
 
-    public OrderPage(WebDriver webDriver) {
+    public EditPizzaPage(WebDriver webDriver) {
         this.webDriver = webDriver;
         PageFactory.initElements(webDriver, this);
     }
 
-    public void selectPizza(String name, String size) {
-        pizza_name_field.sendKeys(name);
-        pizza_size_field.sendKeys(size);
-        create_button.click();
-
-    }
 
     private void addTopping(Topping topping) {
         add_topping_button.click();
@@ -54,14 +42,17 @@ public class OrderPage {
         create_button.click();
     }
 
-    public void order() {
-        order_pizza_link.click();    }
+    public OrderListingPage order() {
+        order_pizza_link.click();
+        return new OrderListingPage(webDriver);
+    }
 
-    public void addToppings(List<Topping> toppings) {
-        if(toppings.isEmpty()) return;
+    public EditPizzaPage addToppings(List<Topping> toppings) {
+        if(toppings.isEmpty()) return new EditPizzaPage(webDriver);
         for (Iterator<Topping> iterator = toppings.iterator(); iterator.hasNext(); ) {
                 Topping topping = iterator.next();
                 addTopping(topping);
             }
+        return new EditPizzaPage(webDriver);
         }
     }
