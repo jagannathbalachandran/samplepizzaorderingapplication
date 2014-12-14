@@ -54,13 +54,13 @@ public class OrderSteps {
     @Then("^the order should be placed for the pizza$")
     public void the_size_pizza_should_be_shown_in_the_list_of_orders() throws Throwable {
         orderListingPage = homePage.navigateToOrderListingPage();
-        assertTrue("Order for " + sharedContext.getPizza() +" is not listed" , orderListingPage.isOrderPlacedFor(sharedContext.getPizza()));
+        assertTrue("Order for " + sharedContext.getPizza() +" should be placed" , orderListingPage.isOrderPlacedFor(sharedContext.getPizza()));
     }
 
     @Then("^the order should not be placed for the pizza$")
     public void the_size_pizza_should_not_be_shown_in_the_list_of_orders() throws Throwable {
         orderListingPage = homePage.navigateToOrderListingPage();
-        assertTrue("Order for " + sharedContext.getPizza() +" is not listed" , !orderListingPage.isOrderPlacedFor(sharedContext.getPizza()));
+        assertTrue("Order for " + sharedContext.getPizza() +" should not be placed" , !orderListingPage.isOrderPlacedFor(sharedContext.getPizza()));
     }
 
     private List<Topping> asToppings(DataTable dataTable) {

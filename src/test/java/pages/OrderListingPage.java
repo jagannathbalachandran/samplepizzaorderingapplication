@@ -67,7 +67,7 @@ public class OrderListingPage {
             Pizza currPizza = getPizzaFromCurrentRow(columns.get(PIZZA_NAME_COLUMN_INDEX).getText() ,columns.get(PIZZA_SIZE_COLUMN_INDEX).getText() );
             String noOfToppings = columns.get(PIZZA_NO_OF_TOPPINGS_COLUMN_INDEX).getText();
             if(pizza.equals(currPizza) && Integer.valueOf(pizza.getNoOfToppings()).equals(Integer.valueOf(noOfToppings))) {
-                columns.get(PIZZA_SHOW_DETAILS_COLUMN_INDEX).click();
+                columns.get(PIZZA_SHOW_DETAILS_COLUMN_INDEX).findElement(By.linkText("Show")).click();
                 return new EditPizzaPage(webDriver);
             }
         }
