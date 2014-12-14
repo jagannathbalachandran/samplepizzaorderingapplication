@@ -58,6 +58,8 @@ Steps to run tests from command line
 
 4)Execute - mvn test 
 
+Note - The html results of the run can be viewed here - target/cucumber/index.html
+
 
 Running tests on chrome
 ---------------------------
